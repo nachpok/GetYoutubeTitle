@@ -1,3 +1,4 @@
+//run 'npm install' and 'vercel' to initialize project
 const app = require("express")();
 
 let chrome = {};
@@ -10,7 +11,7 @@ if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
   puppeteer = require("puppeteer");
 }
 
-app.get("/api", async (req, res) => {
+app.get("/api/:slug", async (req, res) => {
   let options = {};
 
   if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
@@ -24,11 +25,16 @@ app.get("/api", async (req, res) => {
   }
 
   try {
-    let browser = await puppeteer.launch(options);
+    // let browser = await puppeteer.launch(options);
 
-    let page = await browser.newPage();
-    await page.goto("https://www.google.com");
-    res.send(await page.title());
+    // let page = await browser.newPage();
+    
+    // await page.goto(`https://www.youtube.com/watch?v=${req.params.slug}`);
+    // await page.waitForSelector("head > title");
+    // const data = await page.$eval("head > title", (el) => el.textContent);
+
+    // res.send(data.slice(0,-10));
+    res.send(req.params.slug)
   } catch (err) {
     console.error(err);
     return null;
